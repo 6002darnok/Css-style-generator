@@ -17,6 +17,7 @@ function BoxGradient({ isOpen ,setIsOpen}) {
   const [isHovering, setIsHovering] = useState(false);
 
   const handleMouseOver = () => {
+    console.log("sdas");
     setIsHovering(true);
   };
 
@@ -83,10 +84,11 @@ function BoxGradient({ isOpen ,setIsOpen}) {
 
                 />
                 {colorLeftOpen && (
+  
                   <ColorPicker
                     color={colorLeft}
                     onChangeComplete={(color) => setColorLeft(color)}
-                    onMouseOver={setIsHovering} onMouseOut={handleMouseOut}
+                    
                   />
                 )}
               </LabelBox>
@@ -103,7 +105,7 @@ function BoxGradient({ isOpen ,setIsOpen}) {
                   <ColorPicker
                     color={colorRight}
                     onChangeComplete={(color) => setColorRight(color)}
-                    onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}
+                    
                   />
                 )}
               </LabelBox>
