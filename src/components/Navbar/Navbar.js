@@ -17,6 +17,9 @@ function Navbar({ isOpen ,setIsOpen}) {
           <ListItem>
             <StyledLink to="/Css-style-generator/boxShadow" onClick={setIsOpen}>Box shadow generator</StyledLink>
           </ListItem>
+          <ListItem>
+            <StyledLink to="/Css-style-generator/boxGradient" onClick={setIsOpen}>Box gradient generator</StyledLink>
+          </ListItem>
         </List>
       </NavELements>
     </Nav>

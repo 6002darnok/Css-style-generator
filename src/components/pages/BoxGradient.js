@@ -1,75 +1,73 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import RangeInput from "../Atoms/BoxAtoms/RangeInput";
+import RotationRangeInput from "../Atoms/BoxAtoms/RotationRangeInput";
 import ColorPicker from "../Atoms/BoxAtoms/ColorPicker";
 import { CopyOutline } from "react-ionicons";
 
-function BoxShadow() {
-  const [horizontal, setHorizontal] = useState([0]);
-  const [vertical, setVertical] = useState([0]);
-  const [blur, setBlur] = useState([50]);
-  const [spread, setSpread] = useState([0]);
-  const [inset, setInset] = useState(false);
-  const [color, setColor] = useState({ hex: "#000000" });
-  const [colorOpen, setColorOpen] = useState(false);
+function BoxGradient({ isOpen ,setIsOpen}) {
+  const [rotation, setRotation] = useState([90]);
+  const [radial, setRadial] = useState(false);
+  const [colorLeft, setColorLeft] = useState({ hex: "#020024" });
+  const [colorRight, setColorRight] = useState({ hex: "#00d4ff" });
+  const [colorLeftOpen, setColorLeftOpen] = useState(false);
+  const [colorRightOpen, setColorRightOpen] = useState(false);
+  const [leftColorOpend, setLeftColorOpend] = useState(true);
+  const [rightColorOpend, setRightColorOpend] = useState(true);
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handleMouseOver = () => {
+    setIsHovering(true);
+  };
+
+  const handleMouseOut = () => {
+    setIsHovering(false);
+  };
+
+  const settingOffColor = () =>{
+    if(rightColorOpend && leftColorOpend) return;
+    if(isHovering) return;
+    setColorLeftOpen(false)
+    setColorRightOpen(false)
+    setLeftColorOpend(true)
+    setRightColorOpend(true)
+  }
+
+  const oppeningLeftColor = () =>{
+    setColorLeftOpen(!colorLeftOpen)
+    setLeftColorOpend(false)
+  }
+
+  const oppeningRightColor = () =>{
+    setColorRightOpen(!colorRightOpen)
+    setRightColorOpend(false)
+  }
 
   return (
-    <Box onClick={colorOpen ? () => setColorOpen(false) : null}>
+    <Box onClick={settingOffColor}>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Container>
           <OperationBox>
             <InputBox>
               <LabelBox>
-                <Label>Horizontal</Label>
-                <p>{horizontal}</p>
+                <Label>Rotation</Label>
+                <p>{rotation}</p>
               </LabelBox>
-              <RangeInput
-                value={horizontal}
-                setValue={(value) => setHorizontal(value)}
+              <RotationRangeInput
+                value={rotation}
+                setValue={(value) => setRotation(value)}
               />
             </InputBox>
             <InputBox>
               <LabelBox>
-                <Label>vertical</Label>
-                <p>{vertical}</p>
-              </LabelBox>
-              <RangeInput
-                value={vertical}
-                setValue={(value) => setVertical(value)}
-              />
-            </InputBox>
-            <InputBox>
-              <LabelBox>
-                <Label>Blur</Label>
-                <p>{blur}</p>
-              </LabelBox>
-              <RangeInput
-                value={blur}
-                setValue={(value) => setBlur(value)}
-                min={0}
-              />
-            </InputBox>
-            <InputBox>
-              <LabelBox>
-                <Label>Spread</Label>
-                <p>{spread}</p>
-              </LabelBox>
-              <RangeInput
-                value={spread}
-                setValue={(value) => setSpread(value)}
-              />
-            </InputBox>
-            <InputBox>
-              <LabelBox>
-                <Label>Inset</Label>
-                <p>{inset}</p>
+                <Label>Radial</Label>
+                <p>{radial}</p>
                 <CheckBoxWrapper>
                   <CheckBox
                     id="checkbox"
                     type="checkbox"
-                    value={inset}
-                    onChange={() => setInset(!inset)}
+                    value={radial}
+                    onChange={() => setRadial(!radial)}
                   />
                   <CheckBoxLabel htmlFor="checkbox" />
                 </CheckBoxWrapper>
@@ -77,16 +75,35 @@ function BoxShadow() {
             </InputBox>
             <InputBox>
               <LabelBox>
-                <Label>Color</Label>
-                <p>{inset}</p>
+                <Label>First Color</Label>
+                <p>{radial}</p>
                 <ColorBox
-                  color={color.hex}
-                  onClick={() => setColorOpen(!colorOpen)}
+                  color={colorLeft.hex}
+                  onClick={oppeningLeftColor}
+
                 />
-                {colorOpen && (
+                {colorLeftOpen && (
                   <ColorPicker
-                    color={color}
-                    onChangeComplete={(color) => setColor(color)}
+                    color={colorLeft}
+                    onChangeComplete={(color) => setColorLeft(color)}
+                    onMouseOver={setIsHovering} onMouseOut={handleMouseOut}
+                  />
+                )}
+              </LabelBox>
+            </InputBox>
+            <InputBox>
+              <LabelBox>
+                <Label>Second Color</Label>
+                <p>{radial}</p>
+                <ColorBox
+                  color={colorRight.hex}
+                  onClick={oppeningRightColor}
+                />
+                {colorRightOpen && (
+                  <ColorPicker
+                    color={colorRight}
+                    onChangeComplete={(color) => setColorRight(color)}
+                    onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}
                   />
                 )}
               </LabelBox>
@@ -99,14 +116,12 @@ function BoxShadow() {
               alignItems: "center",
             }}
           >
-            <OutputBox
-              horizontal={horizontal}
-              vertical={vertical}
-              blur={blur}
-              spread={spread}
-              inset={inset}
-              color={color.hex}
-            />
+            {<OutputBox
+              rotation={rotation}
+              radial={radial}
+              colorLeft={colorLeft.hex}
+              colorRight={colorRight.hex}
+            />}
             <CodeBox>
               <IconBox>
                 <CopyOutline
@@ -117,39 +132,20 @@ function BoxShadow() {
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     navigator.clipboard.writeText(
-                      `box-shadow:${
-                        inset && "inset"
-                      } ${horizontal}px ${vertical}px ${blur}px ${spread}px ${
-                        color.hex
-                      };
-                    -webkit-box-shadow:${
-                      inset && "inset"
-                    } ${horizontal}px ${vertical}px ${blur}px ${spread}px ${
-                        color.hex
-                      };
-                    -moz-box-shadow:${
-                      inset && "inset"
-                    } ${horizontal}px ${vertical}px ${blur}px ${spread}px ${
-                        color.hex
-                      };
-                    
+                      `background: ${radial ? "radial-gradient" : "linear-gradient"}
+                      ${radial ? "(circle, " : "("+rotation + "deg, "}
+                      ${colorLeft.hex + " 0%"}, ${colorRight.hex + " 100%)"};
                     `
                     );
                   }}
                 />
               </IconBox>
               <StyledCode>
-                box-shadow:{inset && "inset"} {horizontal + "px"}{" "}
-                {vertical + "px"} {blur + "px"} {spread + "px"} {color.hex};
+                background: {radial ? "radial-gradient" : "linear-gradient"}
+                {radial ? "(circle, " : "("+rotation + "deg, "}
+                {colorLeft.hex + " 0%"}, {colorRight.hex + " 100%)"};
               </StyledCode>
-              <StyledCode>
-                -webkit-box-shadow:{inset && "inset"} {horizontal + "px"}{" "}
-                {vertical + "px"} {blur + "px"} {spread + "px"} {color.hex};
-              </StyledCode>
-              <StyledCode>
-                -moz-box-shadow:{inset && "inset"} {horizontal + "px"}{" "}
-                {vertical + "px"} {blur + "px"} {spread + "px"} {color.hex};
-              </StyledCode>
+              <StyledCode> </StyledCode>
             </CodeBox>
           </OperationBox>
         </Container>
@@ -267,7 +263,7 @@ const CodeBox = styled.div`
 `;
 const StyledCode = styled.p`
   color: white;
-  font-size: 20px;
+  font-size: 18px;
 `;
 const IconBox = styled.div`
   width: 100%;
@@ -279,13 +275,13 @@ const IconBox = styled.div`
 `;
 
 const OutputBox = styled.div`
-  width: 200px;
+  width: 500px;
   height: 200px;
-  background-color: red;
-  box-shadow: ${(props) => props.inset && "inset"}
-    ${(props) => props.horizontal + "px"} ${(props) => props.vertical + "px"}
-    ${(props) => props.blur + "px"} ${(props) => props.spread + "px"}
-    ${(props) => props.color};
+  background: ${(props) => props.radial ? "radial-gradient" : "linear-gradient"}(
+  ${(props) => props.radial ? "circle" : (props) => props.rotation + "deg"},
+  ${(props) => props.colorLeft} 0%, ${(props) => props.colorRight} 100%);
+  box-shadow: 1px 3px 3px 1px rgba(0, 0, 0, 0.2);
 `;
 
-export default BoxShadow;
+export default BoxGradient
+;

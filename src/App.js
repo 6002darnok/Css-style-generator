@@ -4,6 +4,7 @@ import { useState } from "react";
 import Home from "./components/pages/Home";
 import BoxShadow from "./components/pages/BoxShadow";
 import { AnimatePresence } from "framer-motion";
+import BoxGradient from "./components/pages/BoxGradient";
 
 function App() {
   const [isOpenNav, setIsOpen] = useState(false);
@@ -23,6 +24,7 @@ function App() {
           />
           <Route path="*" element={<h1>Not found</h1>} />
           <Route path="/Css-style-generator/boxShadow" element={<BoxShadow />} />
+          <Route path="/Css-style-generator/boxGradient" element={<BoxGradient />} />
         </Routes>
       </AnimatePresence>
     </Main>
