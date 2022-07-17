@@ -6,8 +6,8 @@ function Main({ children,isOpen ,setIsOpen }) {
     
   return (
     <MainContainer>
-      <Navbar isOpen={isOpen} setIsOpen={setIsOpen}/>
-      <ChildContainer>{children}</ChildContainer>
+    <Navbar isOpen={isOpen} setIsOpen={setIsOpen}/>
+    <ChildContainer>{children}</ChildContainer>
       
     </MainContainer> 
   );
