@@ -14,6 +14,8 @@ const StyledBurger = styled.div`
     margin: 5px;
     transition: transform .2s, margin-top .2s, margin-bottom .2s;
   }
+  ${(props) => (props.isOpen ? `
+  cursor: pointer;
   &:hover{
     .one{
       transform:  rotate(-45deg);
@@ -28,13 +30,14 @@ const StyledBurger = styled.div`
       margin-top: -9px;
       margin-bottom: 14px;
     }
-  }
+  }` : ""
+  )}
   
 `;
-function Burger({isOpen}){
+function Burger({ setIsOpen, isOpen }){
 
   return (
-    <StyledBurger isOpen={isOpen}>
+    <StyledBurger onClick={setIsOpen} isOpen={isOpen}>
       <div className="one"/>
       <div className="two"/>
       <div className="three"/>
