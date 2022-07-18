@@ -4,10 +4,11 @@ import Burger from "./Burger";
 import { Link } from "react-router-dom";
 
 function Navbar({ isOpen ,setIsOpen}) {
+
   return (
     <Nav isOpen={isOpen}>
       <BurgerBox>
-        <Burger isOpen={isOpen} />
+        <Burger isOpen={isOpen} props={isOpen}/>
       </BurgerBox>
       <NavELements>
         <List> 
