@@ -8,7 +8,7 @@ function Navbar({ isOpen ,setIsOpen}) {
   return (
     <Nav isOpen={isOpen}>
       <BurgerBox>
-        <Burger isOpen={isOpen} props={isOpen}/>
+        <Burger isOpen={isOpen} props={isOpen} setIsOpen={setIsOpen}/>
       </BurgerBox>
       <NavELements>
         <List> 
