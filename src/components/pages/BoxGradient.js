@@ -7,6 +7,7 @@ import { CopyOutline } from "react-ionicons";
 
 function BoxGradient({ isOpen ,setIsOpen}) {
   const [rotation, setRotation] = useState([90]);
+  const [inputValue, setInputValue] = useState();
   const [radial, setRadial] = useState(false);
   const [colorLeft, setColorLeft] = useState({ hex: "#020024" });
   const [colorRight, setColorRight] = useState({ hex: "#00d4ff" });
@@ -15,15 +16,6 @@ function BoxGradient({ isOpen ,setIsOpen}) {
   const [leftColorOpend, setLeftColorOpend] = useState(true);
   const [rightColorOpend, setRightColorOpend] = useState(true);
   const [isHovering, setIsHovering] = useState(false);
-
-  const handleMouseOver = () => {
-    console.log("sdas");
-    setIsHovering(true);
-  };
-
-  const handleMouseOut = () => {
-    setIsHovering(false);
-  };
 
   const settingOffColor = () =>{
     if(rightColorOpend && leftColorOpend) return;
@@ -44,21 +36,33 @@ function BoxGradient({ isOpen ,setIsOpen}) {
     setRightColorOpend(false)
   }
 
+  const rotationChangeValue = (event) =>{
+    const {value} = event.target;
+    const val = parseInt(value, 10)
+    console.log(value);
+    setRotation(value);
+  }
+
   return (
     <Box onClick={settingOffColor}>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Container>
           <OperationBox>
-            <InputBox>
-              <LabelBox>
-                <Label>Rotation</Label>
-                <p>{rotation}</p>
-              </LabelBox>
-              <RotationRangeInput
-                value={rotation}
-                setValue={(value) => setRotation(value)}
-              />
-            </InputBox>
+            {!radial && (
+              <InputBox>
+                <LabelBox>
+                  <Label>Rotation</Label>
+                  <InputNumber 
+                    value={rotation}
+                    onChange={rotationChangeValue}
+                  ></InputNumber>
+                </LabelBox>
+                <RotationRangeInput
+                  value={rotation}
+                  setValue={(value) => setRotation(value)}
+                />
+              </InputBox>
+            )}
             <InputBox>
               <LabelBox>
                 <Label>Radial</Label>
@@ -102,6 +106,7 @@ function BoxGradient({ isOpen ,setIsOpen}) {
                   onClick={oppeningRightColor}
                 />
                 {colorRightOpen && (
+
                   <ColorPicker
                     color={colorRight}
                     onChangeComplete={(color) => setColorRight(color)}
@@ -203,6 +208,21 @@ const Label = styled.label``;
 const CheckBoxWrapper = styled.div`
   position: relative;
 `;
+
+const InputNumber = styled.input.attrs({ type: 'number' })`
+  font-size: 18px;
+  padding: 10px;
+  max-height: 20px;
+  max-width: 65px;
+  border-style: solid;
+  border-color: rgba(0,0,0,0.1);
+  border-radius: 3px;
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 0px 2px #50e3c2;
+}
+`;
+
 const CheckBoxLabel = styled.label`
   position: absolute;
   top: 0;
